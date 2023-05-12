@@ -31,6 +31,8 @@ The front-end is a simple web page and it's located in the `/public` directory. 
 
 ## Installation and usage
 
+### Project setup
+
 1. First you need to have Node JS installed on your system (v16 or higher). If you don't have any just visit [the official website](https://nodejs.org/en) and download the LTS version. During installation make sure you select the option to install the `NPM` package manager too.
 
 2. Open the project directory with your IDE or the command-line and run `npm install` to install all the packages needed by the Node server.
@@ -47,7 +49,7 @@ The front-end is a simple web page and it's located in the `/public` directory. 
 
 Run the application by executing the command `npm run start`. It will serve the Node server on the local host and you should see something similar in the console output:
 
-```ps
+```shell
 Server is running on port http://localhost:8080.
 ```
 
@@ -61,7 +63,9 @@ To subscribe for push notifications you have to click on the button and give not
 
 ![image](https://github.com/StefanNedelchev/pwa-push-example/assets/15238282/526ec4ae-bad8-4f30-9f42-ecf04da6a633)
 
-To push a notification you need to send a POST request to the **/send-message** end point of our API. You can use the `test-push.http` script from the root directory which serves as an example. You can use it with an REST client like Postman or [the REST Client extension for VSCode](https://marketplace.visualstudio.com/items?itemName=humao.rest-client). You can modify the port and the body of the request to suite your needs. After sending a request all subscribers should receive a push notification. The service worker also handles clicking on the notification and you'll see small label appear on the UI.
+### Pushing a notification
+
+To push a notification you need to send a POST request to the **/send-message** end point of our API. You can use the `test-push.http` script from the root directory which serves as an example. You can use it with a REST client like Postman or [the REST Client extension for VSCode](https://marketplace.visualstudio.com/items?itemName=humao.rest-client). You can modify the port and the body of the request to suite your needs. After sending a request all subscribers should receive a push notification. The service worker also handles clicking on the notification and you'll see small label appear on the UI.
 
 ## Further reading
 
