@@ -51,10 +51,13 @@ Server is running on port http://localhost:8080.
 
 Open this URL in your browser and you should see the following page:
 
+![image](https://github.com/StefanNedelchev/pwa-push-example/assets/15238282/5e171124-605c-46ff-83da-dada08658ff7)
 
 *NOTE: if for some reason the service worker is not registered successfully you'll see an error message instead*
 
 To subscribe for push notifications you have to click on the button and give notification permissions to the app by clicking "allow" on the pop-up that would appear.
+
+![image](https://github.com/StefanNedelchev/pwa-push-example/assets/15238282/526ec4ae-bad8-4f30-9f42-ecf04da6a633)
 
 To push a notification you need to send a POST request to the **/send-message** end point of our API. You can use the `test-push.http` script from the root directory which serves as an example. You can use it with an REST client like Postman or [the REST Client extension for VSCode](https://marketplace.visualstudio.com/items?itemName=humao.rest-client). You can modify the port and the body of the request to suite your needs. After sending a request all subscribers should receive a push notification. The service worker also handles clicking on the notification and you'll see small label appear on the UI.
 
