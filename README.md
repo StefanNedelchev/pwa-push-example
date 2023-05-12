@@ -50,7 +50,7 @@ The front-end is a simple web page and it's located in the `/public` directory. 
 Run the application by executing the command `npm run start`. It will serve the Node server on the local host and you should see something similar in the console output:
 
 ```shell
-Server is running on port http://localhost:8080.
+Server is running on http://localhost:8080.
 ```
 
 Open this URL in your browser and you should see the following page:

@@ -47,7 +47,7 @@ app.use('/', express.static(webAppPath));
 
 const port = parseInt(process.env['PORT'], 10) || 8080;
 app.listen(port, () => {
-  console.log(`Server is running on port http://localhost:${port}.`);
+  console.log(`Server is running on http://localhost:${port}.`);
 });
 
 process.on('SIGTERM', () => {
