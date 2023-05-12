@@ -45,7 +45,7 @@ app.post('/send-message', (req, res) => {
 const webAppPath = path.join(__dirname, '..', 'public');
 app.use('/', express.static(webAppPath));
 
-const port = 8080;
+const port = parseInt(process.env['PORT'], 10);
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}.`);
 });

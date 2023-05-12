@@ -1,8 +1,15 @@
+import dotenv from 'dotenv';
 import webPush from 'web-push';
 
+dotenv.config();
+
+if (!process.env['VAPID_PUBLIC_KEY'] || process.env['VAPID_PRIVATE_KEY']) {
+  throw new Error('VAPID keys are missing from the env variables. Please generate VAPID key pair with web-push and set the variables!');
+}
+
 const vapidKeys = {
-  publicKey: 'BI0qT1Mf0sL1YwZ5UkwpuFOvwFBqpXjWxNBkrEIjWpM9Y3ThsSXaQ8Bj7ICc0tFNZ-1F2oT2d7nyt-RS2rr_LIQ',
-  privateKey: '5BlFTZfiru97DrHREnOAaPLGn5ZeyHPUgwoZ9yJTKdk',
+  publicKey: process.env['VAPID_PUBLIC_KEY'],
+  privateKey: process.env['VAPID_PRIVATE_KEY'],
 };
 webPush.setVapidDetails('mailto:example@yourdomain.org', vapidKeys.publicKey, vapidKeys.privateKey);
 
