@@ -5,7 +5,8 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node api/app.js"
+    "start": "node api/app.js",
+    "vapid-keys": "web-push generate-vapid-keys"
   },
   "author": "",
   "license": "ISC",

@@ -1,3 +1,5 @@
+const applicationServerKey = '<public-vapid-key>';
+const apiPort = 8080;
 const swInfoEl = document.getElementById('sw_info');
 const subInfoEl = document.getElementById('sub_info');
 
@@ -46,10 +48,10 @@ async function subscribeToNotifications() {
   const registration = await navigator.serviceWorker.ready;
   const pushSubscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: 'BI0qT1Mf0sL1YwZ5UkwpuFOvwFBqpXjWxNBkrEIjWpM9Y3ThsSXaQ8Bj7ICc0tFNZ-1F2oT2d7nyt-RS2rr_LIQ',
+    applicationServerKey,
   });
 
-  const response = await fetch('http://localhost:8080/subscribe', {
+  const response = await fetch(`http://localhost:${apiPort}/subscribe`, {
     method: 'POST',
     body: JSON.stringify(pushSubscription),
     headers: {

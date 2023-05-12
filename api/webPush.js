@@ -3,7 +3,7 @@ import webPush from 'web-push';
 
 dotenv.config();
 
-if (!process.env['VAPID_PUBLIC_KEY'] || process.env['VAPID_PRIVATE_KEY']) {
+if (!process.env['VAPID_PUBLIC_KEY'] || !process.env['VAPID_PRIVATE_KEY']) {
   throw new Error('VAPID keys are missing from the env variables. Please generate VAPID key pair with web-push and set the variables!');
 }
 
