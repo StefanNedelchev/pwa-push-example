@@ -26,6 +26,8 @@ The front-end is a simple web page and it's located in the `/public` directory. 
 - `styles.css` - stylesheet wieh a few styles for our elements
 - `scripts.js` - the client-side JavaScript code which is used by the web page
 - `sw.js` - the [service worker](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API) which will be registered an installed by the browser. It's necessary for PWA applications and its main purpose for this project is to handle push notifications.
+- `manifes.webmanifes` - basic web manifest file which is necessary for each PWA. It includes properties like app name, theme colors and paths to icons.
+- `/assets` - a folder that includes all static assets (in this case we have icons and a splash screen for iOS)
 
 ## Installation and usage
 
