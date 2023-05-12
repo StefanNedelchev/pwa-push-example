@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="PWA test with minimal required implementation">
+
+    <!-- -------------------------- iOS tags -------------------------- -->
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- status bar style for ios -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- theme color for ios -->
+    <meta name="theme-color" content="#de411b">
+    <!-- apple touch icon for ios -->
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon-apple-touch.png">
+    <!-- apple touch splash screen for ios -->
+    <link rel="apple-touch-startup-image"
+      media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)"
+      href="assets/splashes/splash-1242x2208.png">
+    <!-- -------------------------------------------------------------- -->
+
+    <!-- favicon for browser tabs -->
+    <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+    <!-- web manifest -->
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>PWA Starter</title>
+  </head>
+  <body>
+    <nav>
+      <span>PWA Starter</span>
+    </nav>
+
+    <div class="container">
+      <div class="alert info" id="sw_info"></div>
+
+      <button type="button" onclick="subscribeToNotifications()">Subscribe for notifications</button>
+      <p id="sub_info"></p>
+    </div>
+
+    <noscript>Please enable JavaScript to continue using this application.</noscript>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
