@@ -5,7 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node api/app.js"
   },
   "author": "",
   "license": "ISC",
