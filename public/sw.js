@@ -11,7 +11,7 @@ self.addEventListener('fetch', () => {
 });
 
 async function matchClient(urlToOpen) {
-  const windowClients = await clients.matchAll({ type: 'window' });
+  const windowClients = await clients.matchAll({ type: 'window', includeUncontrolled: true });
   return windowClients.find((windowClient) => windowClient.url.startsWith(urlToOpen));
 }
 
