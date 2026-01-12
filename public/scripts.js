@@ -35,7 +35,7 @@ async function requestPermission() {
   }
 
   return window.Notification.permission === 'default'
-    ? window.Notification.requestPermission()
+    ? await window.Notification.requestPermission()
     : window.Notification.permission;
 }
 
@@ -53,7 +53,7 @@ async function subscribeToNotifications() {
 
   const response = await fetch(`http://localhost:${apiPort}/subscribe`, {
     method: 'POST',
-    body: JSON.stringify(pushSubscription),
+    body: JSON.stringify(pushSubscription.toJSON()),
     headers: {
       'content-type': 'application/json',
     },

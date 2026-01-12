@@ -63,5 +63,8 @@ function deleteSubscription(endpoint) {
 }
 
 export {
-  db, getAllSubscriptions as selectAllSubscriptions, saveSubscription as insertSubscription, deleteSubscription,
+  db,
+  getAllSubscriptions as selectAllSubscriptions,
+  saveSubscription as insertSubscription,
+  deleteSubscription,
 };
