@@ -30,16 +30,25 @@ button {
     margin: 0;
     padding: 0.5rem;
     color: white;
-    background-color: #8a8a8a;
+    background-color: #2360b0;
     border: 1px solid #222;
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
 }
+button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+}
 
 button:hover {
     color: #222;
-    background-color: #cdcdcd;
+    background-color: #95baea;
+}
+
+button:disabled:hover {
+    color: #222;
+    background-color: #dadada;
 }
 
 .alert {
