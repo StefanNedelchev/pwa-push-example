@@ -1,62 +1,146 @@
-const applicationServerKey = '<public-vapid-key>';
-const apiPort = 8080;
+const APPLICATION_SERVER_KEY = '<public-vapid-key>';
+const API_PORT = 8080;
+const SUBSCRIPTION_POLL_MS = 1000;
+const NOTIFICATION_CLICK_MESSAGE = 'notification-clicked';
+
 const swInfoEl = document.getElementById('sw_info');
 const subInfoEl = document.getElementById('sub_info');
+const btnSubEl = document.getElementById('btn_sub');
 
-if ('serviceWorker' in window.navigator) {
-  swInfoEl.className = 'alert info';
-  swInfoEl.textContent = 'Registering service worker...';
+function setSwInfo(type, text) {
+  swInfoEl.className = `alert ${type}`;
+  swInfoEl.textContent = text;
+}
 
-  // Check if the notifications are denied by the user and update the UI
-  if (window.Notification.permission === 'denied') {
-    subInfoEl.textContent = '❌ Notifications have been disabled!';
+function setSubInfo(text) {
+  subInfoEl.textContent = text;
+}
+
+function setSubButtonDisabled(isDisabled) {
+  if (isDisabled) {
+    btnSubEl.setAttribute('disabled', 'disabled');
+  } else {
+    btnSubEl.removeAttribute('disabled');
+  }
+}
+
+function handleDeniedNotifications() {
+  setSubInfo('🔕 Notifications have been disabled!');
+  setSubButtonDisabled(true);
+}
+
+function isNotificationDenied() {
+  return window.Notification.permission === 'denied';
+}
+
+async function hasSubscription() {
+  const registration = await navigator.serviceWorker.ready;
+  const subscription = await registration.pushManager.getSubscription();
+
+  if (subscription) {
+    setSubInfo('✅ You are already subscribed to notifications!');
+    return true;
   }
 
-  window.navigator.serviceWorker.register('sw.js').then(() => {
-    swInfoEl.className = 'alert success';
-    swInfoEl.textContent = 'Service Worker has been registered successfully 🙂';
+  return false;
+}
 
-    navigator.serviceWorker.addEventListener('message', (event) => {
-      // listen for notification click message from the service worker and update the UI
-      if (event.data.message === 'notification-clicked') {
-        subInfoEl.textContent = '🖱️ The notification was clicked! 🖱️';
-        setTimeout(() => { subInfoEl.textContent = ''; }, 5000);
-      }
-    });
-  });
-} else {
-  swInfoEl.className = 'alert error';
-  swInfoEl.textContent = 'Servie Worker is not supported by your browser 🙁';
+async function pollSubscriptionStatus() {
+  const registration = await navigator.serviceWorker.ready;
+
+  setInterval(async () => {
+    // Keep UI in sync if the user removes a subscription elsewhere.
+    const subscription = await registration.pushManager.getSubscription();
+    if (subscription) {
+      return;
+    }
+
+    setSubInfo('');
+
+    if (isNotificationDenied()) {
+      handleDeniedNotifications();
+      return;
+    }
+
+    setSubButtonDisabled(false);
+  }, SUBSCRIPTION_POLL_MS);
+}
+
+function handleServiceWorkerMessage(event) {
+  if (!event.data || event.data.message !== NOTIFICATION_CLICK_MESSAGE) {
+    // Ignore missing or unknown messages
+    return;
+  }
+
+  setSubInfo('🖱️ The notification was clicked!');
+  setTimeout(() => {
+    setSubInfo('');
+  }, 5000);
 }
 
 async function requestPermission() {
   if (!('Notification' in window)) {
-    throw new Error('Notifications not supported!');;
+    throw new Error('Notifications not supported!');
   }
 
-  return window.Notification.permission === 'default'
-    ? await window.Notification.requestPermission()
-    : window.Notification.permission;
+  if (window.Notification.permission === 'default') {
+    // Prompt only when the user hasn't decided yet.
+    return window.Notification.requestPermission();
+  }
+
+  return window.Notification.permission;
 }
 
 async function subscribeToNotifications() {
-  if ((await requestPermission()) === 'denied') {
-    subInfoEl.textContent = '❌ Notifications have been disabled!';
+  const permission = await requestPermission();
+  if (permission === 'denied') {
+    handleDeniedNotifications();
+    return;
+  }
+
+  if (await hasSubscription()) {
     return;
   }
 
   const registration = await navigator.serviceWorker.ready;
   const pushSubscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey,
+    applicationServerKey: APPLICATION_SERVER_KEY,
   });
 
-  const response = await fetch(`http://localhost:${apiPort}/subscribe`, {
+  const response = await fetch(`http://localhost:${API_PORT}/subscribe`, {
     method: 'POST',
     body: JSON.stringify(pushSubscription.toJSON()),
     headers: {
       'content-type': 'application/json',
     },
   });
-  subInfoEl.textContent = (await response.json()).message;
+
+  const { message } = await response.json();
+  setSubInfo(message);
 }
+
+function initServiceWorker() {
+  if (!('serviceWorker' in navigator)) {
+    setSwInfo('error', '📵 Service Worker is not supported by your browser 🙁');
+    return;
+  }
+
+  setSwInfo('info', '⚙️ Registering service worker...');
+
+  if (isNotificationDenied()) {
+    handleDeniedNotifications();
+  } else {
+    // Update UI early if a subscription already exists.
+    hasSubscription();
+  }
+
+  pollSubscriptionStatus();
+
+  navigator.serviceWorker.register('sw.js').then(() => {
+    setSwInfo('success', 'Service Worker has been registered successfully 🙂');
+    navigator.serviceWorker.addEventListener('message', handleServiceWorkerMessage);
+  });
+}
+
+initServiceWorker();

@@ -33,7 +33,7 @@ The front-end is a simple web page and it's located in the `/public` directory. 
 
 ### Project setup 🛠️
 
-1. 🖥️ First you need to have Node.js installed on your system (v22 or higher). If you don't have it, visit [the official website](https://nodejs.org/en) and download the LTS version. During installation make sure you select the option to install the `npm` package manager too.
+1. 🖥️ First you need to have Node.js installed on your system (Latest stable version is highly recommended). If you don't have it, visit [the official website](https://nodejs.org/en) and download the LTS version. During installation make sure you select the option to install the `npm` package manager too.
 
 2. Open the project directory with your IDE or the command-line and run `npm install` to install all the packages needed by the Node server.
 
