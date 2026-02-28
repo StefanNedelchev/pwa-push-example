@@ -13,7 +13,7 @@
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
-    "dotenv": "^17.2.4",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "sqlite3": "^5.1.7",
     "web-push": "^3.6.7"
@@ -22,7 +22,7 @@
     "@types/body-parser": "^1.19.6",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/node": "^22.19.11",
+    "@types/node": "^22.19.13",
     "@types/web-push": "^3.6.4"
   }
 }
