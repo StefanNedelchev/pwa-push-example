@@ -108,6 +108,7 @@ async function subscribeToNotifications() {
     applicationServerKey: APPLICATION_SERVER_KEY,
   });
 
+  // Persist the subscription so the backend can send push messages later.
   const response = await fetch(`http://localhost:${API_PORT}/subscribe`, {
     method: 'POST',
     body: JSON.stringify(pushSubscription.toJSON()),
@@ -139,8 +140,10 @@ function initServiceWorker() {
 
   navigator.serviceWorker.register('sw.js').then(() => {
     setSwInfo('success', 'Service Worker has been registered successfully 🙂');
+    // Listen for service worker messages (e.g., notification click events).
     navigator.serviceWorker.addEventListener('message', handleServiceWorkerMessage);
   });
 }
 
+// Entry point; assumes the DOM is available (script loaded with defer or at end of body).
 initServiceWorker();
